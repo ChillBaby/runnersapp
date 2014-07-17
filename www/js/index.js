@@ -26,7 +26,8 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        //document.addEventListener('deviceready', this.onDeviceReady, false);
+		document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
@@ -34,6 +35,9 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+		var options =  { maximumAge: 3000, timeout: 3000, enableHighAccuracy: true };
+		navigator.geolocation.getCurrentPosition(this.ShowPosition, this.ShowError, options);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -43,7 +47,23 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
+		
         console.log('Received Event: ' + id);
-    }
+    },
+	ShowPosition: function(position) {
+        var parentElement = document.getElementById(id);
+        var receivedElement = parentElement.querySelector('.received');
+		receivedElement.innerHTML = "Latitude: " + 
+			position.coords.latitude +
+			", Longitude: " + 
+			position.coords.longitude;
+	},
+	ShowError: function(error) {
+        var parentElement = document.getElementById(id);
+        var receivedElement = parentElement.querySelector('.received');
+		receivedElement.innerHTML = "Errorcode: " + 
+			error.code +
+			"Errormessage: " + 
+			error.message;
+	}
 };
