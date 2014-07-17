@@ -37,7 +37,7 @@ var app = {
         app.receivedEvent('deviceready');
 
 		var options =  { maximumAge: 3000, timeout: 3000, enableHighAccuracy: true };
-		navigator.geolocation.getCurrentPosition(this.ShowPosition, this.ShowError, options);
+		navigator.geolocation.getCurrentPosition(this.showPosition, this.showError, options);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -50,7 +50,7 @@ var app = {
 		
         console.log('Received Event: ' + id);
     },
-	ShowPosition: function(position) {
+	showPosition: function(position) {
         var parentElement = document.getElementById(id);
         var receivedElement = parentElement.querySelector('.received');
 		receivedElement.innerHTML = "Latitude: " + 
@@ -58,7 +58,7 @@ var app = {
 			", Longitude: " + 
 			position.coords.longitude;
 	},
-	ShowError: function(error) {
+	showError: function(error) {
         var parentElement = document.getElementById(id);
         var receivedElement = parentElement.querySelector('.received');
 		receivedElement.innerHTML = "Errorcode: " + 
